@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avenly — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <div class="blob-mini" aria-hidden="true">
+          <div class="bm-body">
+            <span class="bm-eye"></span>
+            <span class="bm-eye"></span>
+          </div>
+        </div>
+        <span class="brand-name">Avenly</span>
+      </div>
+      <a href="login.html" class="nav-link">Login</a>
+    </header>
+
+    <main class="main">
+      <div class="card">
+        <div class="card-left">
+          <h1 class="heading">Sign in!</h1>
+          <p class="sub">Join the community today!</p>
+        </div>
+        <div class="card-right">
+          <input class="input" type="text" id="name" placeholder="Enter your name" autocomplete="name" />
+          <input class="input" type="email" id="email" placeholder="Enter your email address" autocomplete="email" />
+          <input class="input" type="tel" id="phone" placeholder="Enter your phone number" autocomplete="tel" />
+          <button class="btn" id="sendBtn">Send Verification</button>
+          <p class="error" id="err"></p>
+        </div>
+      </div>
+    </main>
+
+    <div class="scallop" aria-hidden="true"></div>
+  </div>
+
+  <script>
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const name  = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const err   = document.getElementById('err');
+
+      if (!name || !email || !phone) {
+        err.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      sessionStorage.setItem('av_name', name);
+      sessionStorage.setItem('av_email', email);
+      sessionStorage.setItem('av_phone', phone);
+      window.location.href = 'signin2.html';
+    });
+  </script>
+</body>
+</html>

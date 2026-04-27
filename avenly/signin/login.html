@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avenly — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <div class="blob-mini" aria-hidden="true">
+          <div class="bm-body">
+            <span class="bm-eye"></span>
+            <span class="bm-eye"></span>
+          </div>
+        </div>
+        <span class="brand-name">Avenly</span>
+      </div>
+      <a href="signin1.html" class="nav-link">Sign In</a>
+    </header>
+
+    <main class="main">
+      <div class="card">
+        <div class="card-left">
+          <h1 class="heading">Login!</h1>
+          <p class="sub">Welcome back!</p>
+        </div>
+        <div class="card-right">
+          <input class="input" type="email" id="email" placeholder="Enter your email address" autocomplete="email" />
+          <input class="input" type="password" id="pw" placeholder="Password" autocomplete="current-password" />
+          <button class="btn" id="loginBtn">Login</button>
+          <p class="error" id="err"></p>
+        </div>
+      </div>
+    </main>
+
+    <div class="scallop" aria-hidden="true"></div>
+  </div>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const email = document.getElementById('email').value.trim();
+      const pw    = document.getElementById('pw').value;
+      const err   = document.getElementById('err');
+
+      if (!email || !pw) {
+        err.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      sessionStorage.setItem('av_authed', '1');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
