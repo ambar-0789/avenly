@@ -8,6 +8,9 @@ import ProfileCreate from './pages/ProfileCreate'
 import StudentProfile from './pages/StudentProfile'
 import TeacherProfile from './pages/TeacherProfile'
 import GuardianProfile from './pages/GuardianProfile'
+import SubjectSelect from './pages/SubjectSelect'
+import MathsGames from './pages/MathsGames'
+import { StarQuestRoutes } from './games/star-quest/StarQuestRoutes'
 
 export default function App() {
   return (
@@ -21,6 +24,9 @@ export default function App() {
       <Route path="/profile/student" element={<StudentProfile />} />
       <Route path="/profile/teacher" element={<TeacherProfile />} />
       <Route path="/profile/guardian" element={<GuardianProfile />} />
+      <Route path="/student/subjects" element={<SubjectSelect />} />
+      <Route path="/student/subjects/maths" element={<MathsGames />} />
+      <Route path="/games/star-quest/*" element={<StarQuestRoutes />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

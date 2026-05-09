@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styles from './StudentProfile.module.css'
 import studentBoy from "/assets/student_boy.png";
 function toggle(current, value) { return current === value ? null : value }
@@ -15,6 +16,7 @@ const SUBJECTS = [
 ]
 
 export default function StudentProfile() {
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [nickname, setNickname] = useState('')
   const [birthday, setBirthday] = useState('')
@@ -31,7 +33,7 @@ export default function StudentProfile() {
   function startJourney() {
     const data = { name, nickname, birthday, grade, gender, learnStyle, attention, pace, visual, font, sensitive, subjects }
     sessionStorage.setItem('av_student_profile', JSON.stringify(data))
-    alert("Let's go! 🚀")
+    navigate('/student/subjects')
   }
 
   const opt = (cur, val, setter, label, iconNode) => (
