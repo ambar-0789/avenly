@@ -1,0 +1,215 @@
+/* ── Auth pages shared styles ── */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;300;400;500;600;700&display=swap');
+
+:root {
+  --bg-top: #f08080;
+  --bg-bot: #f9c0c0;
+  --card-bg: rgba(255,235,235,0.72);
+  --btn: #e86868;
+  --btn-hover: #d45555;
+  --text: #2c1a1a;
+  --placeholder: #b88080;
+  --input-bg: #fff5f5;
+  --input-border: rgba(220,140,140,0.4);
+  --error: #c0392b;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 90px;
+  background: linear-gradient(150deg, var(--bg-top) 0%, var(--bg-bot) 100%);
+  font-family: 'Lexend', sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.blob-mini {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bm-body {
+  width: 46px;
+  height: 40px;
+  background: linear-gradient(145deg, #f08888, #e05555);
+  border-radius: 50% 50% 44% 44% / 58% 58% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: inset 0 -5px 10px rgba(0,0,0,0.12);
+}
+
+.bm-eye {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  position: relative;
+}
+
+.bm-eye::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #1a0a0a;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+}
+
+.brand-name {
+  font-family: 'Lexend', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.nav-link {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.main {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(180,60,60,0.10);
+}
+
+.card-left {
+  flex: 0 0 160px;
+  padding-top: 12px;
+}
+
+.heading {
+  font-family: 'Lexend', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.sub {
+  font-size: 0.9rem;
+  color: #7a4444;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.card-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7a4444;
+  margin-bottom: 2px;
+}
+
+.input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--input-border);
+  background: var(--input-bg);
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input::placeholder { color: var(--placeholder); }
+
+.input:focus {
+  border-color: #e06060;
+  background: #fff;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--btn);
+  color: #fff;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.18s, transform 0.15s;
+}
+
+.btn:hover { background: var(--btn-hover); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.error {
+  font-size: 0.8rem;
+  color: var(--error);
+  min-height: 18px;
+}
+
+.scallop {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  background: #fbe8e8;
+  -webkit-mask-image: radial-gradient(circle 32px at 32px 0, transparent 98%, black 100%);
+  -webkit-mask-size: 64px 100%;
+  -webkit-mask-repeat: repeat-x;
+  mask-image: radial-gradient(circle 32px at 32px 0, transparent 98%, black 100%);
+  mask-size: 64px 100%;
+  mask-repeat: repeat-x;
+}
+
+@media (max-width: 500px) {
+  .card { flex-direction: column; gap: 16px; padding: 24px 20px; }
+  .card-left { flex: unset; padding-top: 0; }
+  .heading { font-size: 1.8rem; }
+}
