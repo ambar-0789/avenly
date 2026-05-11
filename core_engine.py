@@ -8,10 +8,11 @@ class BlinkEngine:
 
     def __init__(self):
 
-        # MediaPipe Face Mesh
+        # Initialize MediaPipe FaceMesh
         self.mp_face_mesh = mp.solutions.face_mesh
 
         self.face_mesh = self.mp_face_mesh.FaceMesh(
+            static_image_mode=False,
             max_num_faces=1,
             refine_landmarks=True,
             min_detection_confidence=0.5,
@@ -22,28 +23,39 @@ class BlinkEngine:
         self.LEFT_EYE = [362, 385, 387, 263, 373, 380]
         self.RIGHT_EYE = [33, 160, 158, 133, 153, 144]
 
-        # Blink variables
+        # Blink tracking
         self.blink_count = 0
         self.eye_closed_frames = 0
 
-       # Eye Aspect Ratio calculation
+    # ----------------------------------------
+    # Calculate Eye Aspect Ratio
+    # ----------------------------------------
     def calculate_ear(self, landmarks, eye_indices, w, h):
 
         points = []
 
         for idx in eye_indices:
+
             x = int(landmarks[idx].x * w)
             y = int(landmarks[idx].y * h)
+
             points.append((x, y))
 
         # Vertical distances
-        A = np.linalg.norm(np.array(points[1]) - np.array(points[5]))
-        B = np.linalg.norm(np.array(points[2]) - np.array(points[4]))
+        A = np.linalg.norm(
+            np.array(points[1]) - np.array(points[5])
+        )
+
+        B = np.linalg.norm(
+            np.array(points[2]) - np.array(points[4])
+        )
 
         # Horizontal distance
-        C = np.linalg.norm(np.array(points[0]) - np.array(points[3]))
+        C = np.linalg.norm(
+            np.array(points[0]) - np.array(points[3])
+        )
 
-        # Prevent division by zero
+        # Avoid division by zero
         if C == 0:
             return 0.0
 
@@ -51,23 +63,38 @@ class BlinkEngine:
 
         return ear
 
-    # Main processing function
+    # ----------------------------------------
+    # Process Webcam Frame
+    # ----------------------------------------
     def process_frame(self, frame):
+
+        if frame is None:
+            return None
 
         h, w, _ = frame.shape
 
-        # Convert BGR to RGB
+        # Flip frame for better webcam detection
+        frame = cv2.flip(frame, 1)
+
+        # Convert BGR → RGB
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        # Process face mesh
+        # Improve performance
+        rgb.flags.writeable = False
+
+        # Detect face mesh
         results = self.face_mesh.process(rgb)
 
-        # No face detected
+        rgb.flags.writeable = True
+
+        # No face found
         if not results.multi_face_landmarks:
             return None
 
-        # Get landmarks
-        landmarks = results.multi_face_landmarks[0].landmark
+        # Get first detected face
+        face_landmarks = results.multi_face_landmarks[0]
+
+        landmarks = face_landmarks.landmark
 
         # Calculate EAR
         left_ear = self.calculate_ear(
@@ -92,8 +119,11 @@ class BlinkEngine:
 
         # Blink detection
         if ear < BLINK_THRESHOLD:
+
             self.eye_closed_frames += 1
+
         else:
+
             if self.eye_closed_frames > 2:
                 self.blink_count += 1
 

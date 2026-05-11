@@ -1,31 +1,24 @@
 class AttentionTracker:
 
     def __init__(self):
+
+        # Focus score between 0 and 1
         self.focus_score = 1.0
 
-    def update(self, data):
+    def update(self, ear, eyes_closed):
 
-        if data is None:
-            self.focus_score -= 0.01
-            return self._clamp()
-
-        ear = data["ear"]
-        eye_closed = data["eye_closed"]
-
-        # Attention logic
-        if eye_closed:
+        # Eyes closed -> reduce attention
+        if eyes_closed:
             self.focus_score -= 0.02
+
         else:
             self.focus_score += 0.01
 
-        # Fatigue logic
+        # Extra fatigue penalty
         if ear < 0.18:
             self.focus_score -= 0.03
 
-        return self._clamp()
-
-    def _clamp(self):
-
+        # Clamp score
         self.focus_score = max(
             0.0,
             min(1.0, self.focus_score)
